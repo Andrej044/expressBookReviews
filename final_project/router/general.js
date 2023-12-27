@@ -20,7 +20,7 @@ public_users.get('/',function (req, res) {
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
   const isbn = parseInt(req.params.isbn)
-  
+
   let filteredBook= books.filter((book) =>  book[1].ISBN === isbn)
 
   if(filteredBook.length > 0){
@@ -31,7 +31,17 @@ public_users.get('/isbn/:isbn',function (req, res) {
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const author = (req.params.author);
+
+  let filteredBook= books.filter((book) =>  {
+    let bookAuthor = book[1].author.split(',').join("");
+    bookAuthor = bookAuthor.split(' ').join('').toLowerCase(); 
+    return bookAuthor === author
+  })
+  
+  if(filteredBook.length > 0){
+    return res.status(300).json(filteredBook);
+  } else  return res.status(300).json("No matching books with author");
 });
 
 // Get all books based on title
