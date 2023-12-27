@@ -1,5 +1,5 @@
 const express = require('express');
-let books = require("./booksdb.js");
+let books = Object.entries(require("./booksdb.js"));
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
@@ -19,8 +19,14 @@ public_users.get('/',function (req, res) {
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
- });
+  const isbn = parseInt(req.params.isbn)
+  
+  let filteredBook= books.filter((book) =>  book[1].ISBN === isbn)
+
+  if(filteredBook.length > 0){
+    return res.status(300).json(filteredBook);
+  } else  return res.status(300).json("No match ISBN");
+});
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
