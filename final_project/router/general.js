@@ -8,8 +8,8 @@ const public_users = express.Router();
 public_users.post("/register", (req,res) => {
   //Write your code here
   let isUserExist = false;
-  let userName = req.query.userName;
-  let password = req.query.password;
+  let userName = req.body.userName;
+  let password = req.body.password;
 
   if(userName.length === 0 || password.length ===0) return res.status(300).json("username or password cannot be empty");
   
