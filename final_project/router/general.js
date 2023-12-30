@@ -8,14 +8,14 @@ const public_users = express.Router();
 public_users.post("/register", (req,res) => {
   //Write your code here
   let isUserExist = false;
-  let userName = req.body.userName;
+  let username = req.body.username;
   let password = req.body.password;
 
-  if(userName.length === 0 || password.length ===0) return res.status(300).json("username or password cannot be empty");
+  if(username.length === 0 || password.length ===0) return res.status(300).json("username or password cannot be empty");
   
   
   users.forEach(user => {
-    if(user.userName === userName){
+    if(user.username === username){
       isUserExist = true;
       return
     } else isUserExist
@@ -23,12 +23,12 @@ public_users.post("/register", (req,res) => {
 
   if(!isUserExist) {
     users.push({
-    "userName" : userName,
+    "username" : username,
     "password" : password
   });
-  return res.status(300).json("The user" + (' ')+ (userName) + " Has been added!");
+  return res.status(300).json("The user" + (' ')+ (username) + " Has been added!");
 } 
-  else res.status(300).json("This userName already exist")
+  else res.status(300).json("This username already exist")
 });
 
 // Get the book list available in the shop
