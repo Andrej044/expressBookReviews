@@ -20,7 +20,6 @@ const isValid = (username)=>{ //returns boolean
 const authenticatedUser = (username,password)=>{ //returns boolean
 //write code to check if username and password match the one we have in records.
   let validusers = users.filter((user)=>{
-    console.log(user.username)
     return (user.username === username && user.password === password)
   });
   if(validusers.length > 0){
@@ -34,7 +33,6 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 regd_users.post("/login", (req,res) => {
   //Write your code here
   const username = req.body.username;
-  console.log(username)
   const password = req.body.password;
   if (!username || !password) {
       return res.status(404).json({message: "Error logging in"});
