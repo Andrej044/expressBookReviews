@@ -72,6 +72,24 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   return res.status(300).json({reviews: filteredBook[0][1].reviews });
 });
 
+
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  //Write your code here
+  const authUser = req.session.authorization.username; // session user
+  const isbn = parseInt(req.params.isbn.split(":").join(""));
+
+  let filteredBook= books.filter((book) => book[1].ISBN === isbn);
+  let reviews = filteredBook[0][1].reviews;
+
+  for (const reviewer in reviews) {
+    if(reviewer === authUser) {
+     delete filteredBook[0][1].reviews[reviewer]       
+    }    
+  }
+
+  return res.status(300).json({reviews: filteredBook[0][1].reviews, message: `review user ${authUser} was deleted` });
+});
+
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;
