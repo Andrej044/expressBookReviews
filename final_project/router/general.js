@@ -34,7 +34,21 @@ public_users.post("/register", (req,res) => {
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
-  return res.status(300).json(books);
+
+  const getBookListPromise = new Promise( (resolve, rej) => {
+    try{
+      const bookList = Object.entries(require("./booksdb.js"));
+      resolve(bookList);
+    }
+    catch(err) {
+      rej(err)}
+  })
+
+  getBookListPromise.then(
+    (data) => res.status(300).json(data),
+    (err) => res.status(300).json({message: `${err}, try again laiter!`})
+  )
+  // return res.status(300).json(books); // method for Task 1
 });
 
 // Get book details based on ISBN
